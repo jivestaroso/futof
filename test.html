@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Web3Forms</title>
+</head>
+<body style="font-family: sans-serif; background: #000; color: #fff; padding: 40px;">
+  <h1>Web3Forms Test</h1>
+  <p>Dit is een testformulier om te kijken of Web3Forms reageert.</p>
+
+  <form action="https://api.web3forms.com/submit" method="POST">
+    <!-- Web3Forms key -->
+    <input type="hidden" name="access_key" value="158321c5-01b0-4465-878d-f51c9759374e">
+
+    <p><input type="text" name="name" placeholder="Name" required></p>
+    <p><input type="email" name="email" placeholder="Email" required></p>
+    <p><textarea name="message" placeholder="Message" required></textarea></p>
+
+    <button type="submit">Send</button>
+  </form>
+</body>
+</html>
