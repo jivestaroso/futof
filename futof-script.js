@@ -63,39 +63,3 @@ const observer = new IntersectionObserver(entries => {
 
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-// === Web3Forms Submission ===
-const form = document.querySelector('form');
-
-if (form) {
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-
-    const submitBtn = form.querySelector('.submit-btn');
-    const originalBtnText = submitBtn.textContent;
-    submitBtn.textContent = "Sending...";
-    submitBtn.disabled = true;
-
-    const data = new FormData(form);
-
-    try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: data
-      });
-
-      if (response.ok) {
-        alert("✅ Thank you! Your message has been sent.");
-        form.reset();
-      } else {
-        const result = await response.json().catch(() => ({}));
-        alert("❌ Something went wrong: " + (result.message || "Unknown error"));
-      }
-    } catch (error) {
-      console.error("⚠️ Network error:", error);
-      alert("⚠️ Network error. Please try again later.");
-    } finally {
-      submitBtn.textContent = originalBtnText;
-      submitBtn.disabled = false;
-    }
-  });
-}
