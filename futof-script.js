@@ -88,30 +88,36 @@ document.querySelectorAll('.fade-in').forEach(el => {
     observer.observe(el);
 });
 
-// ✅ ECHTE Form submission naar Web3Forms
+// Form submission naar Web3Forms met logging
 const form = document.querySelector('form');
 
 if (form) {
-    form.addEventListener('submit', async function (e) {
-        e.preventDefault();
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
 
-        const data = new FormData(form);
+    console.log("🚀 Versturen gestart...");
 
-        try {
-            const response = await fetch(form.action, {
-                method: form.method,
-                body: data,
-            });
+    const data = new FormData(form);
 
-            if (response.ok) {
-                alert('Thank you! Your message has been sent.');
-                form.reset();
-            } else {
-                alert('Oops! Something went wrong. Please try again later.');
-            }
-        } catch (error) {
-            console.error('Form submit error:', error);
-            alert('Network error. Please check your connection.');
-        }
-    });
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: data
+      });
+
+      console.log("🔗 Status:", response.status);
+
+      if (response.ok) {
+        alert("✅ Thank you! Your message has been sent.");
+        form.reset();
+      } else {
+        const result = await response.json();
+        console.error("❌ Error response:", result);
+        alert("❌ Something went wrong: " + (result.message || "Unknown error"));
+      }
+    } catch (error) {
+      console.error("⚠️ Fetch error:", error);
+      alert("⚠️ Network error. Check console for details.");
+    }
+  });
 }
