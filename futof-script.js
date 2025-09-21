@@ -1,101 +1,79 @@
 /*
-futof version 1.0
+futof version 1.1
 */
 
-// JavaScript Document
-
-// Mobile menu toggle
+// === Mobile menu toggle ===
 const menuToggle = document.getElementById('menuToggle');
 const navLinks = document.getElementById('navLinks');
 
-menuToggle.addEventListener('click', function() {
-    menuToggle.classList.toggle('active');
-    navLinks.classList.toggle('active');
+menuToggle.addEventListener('click', () => {
+  menuToggle.classList.toggle('active');
+  navLinks.classList.toggle('active');
 });
 
-// Close mobile menu when link is clicked
+// Sluit menu na klik
 document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', function() {
-        menuToggle.classList.remove('active');
-        navLinks.classList.remove('active');
-    });
+  link.addEventListener('click', () => {
+    menuToggle.classList.remove('active');
+    navLinks.classList.remove('active');
+  });
 });
 
-// Navbar scroll effect and active menu highlighting
+// === Navbar scroll effect & active state ===
 const sections = document.querySelectorAll('section');
 const navItems = document.querySelectorAll('.nav-link');
 
-window.addEventListener('scroll', function() {
-    const navbar = document.getElementById('navbar');
-    
-    // Navbar style on scroll
-    if (window.scrollY > 50) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
+window.addEventListener('scroll', () => {
+  const navbar = document.getElementById('navbar');
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+
+  let current = '';
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop;
+    if (scrollY >= sectionTop - 100) {
+      current = section.id;
     }
+  });
 
-    // Active menu highlighting
-    let current = '';
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (scrollY >= (sectionTop - 100)) {
-            current = section.getAttribute('id');
-        }
-    });
-
-    navItems.forEach(item => {
-        item.classList.remove('active');
-        if (item.getAttribute('href').slice(1) === current) {
-            item.classList.add('active');
-        }
-    });
+  navItems.forEach(item => {
+    item.classList.toggle('active', item.getAttribute('href').slice(1) === current);
+  });
 });
 
-// Trigger scroll event on load to set initial active state
+// Initial state on load
 window.dispatchEvent(new Event('scroll'));
 
-// Smooth scrolling for navigation links
+// === Smooth scroll for anchors ===
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
+  anchor.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(anchor.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
 });
 
-// Fade in animation on scroll
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
+// === Fade-in on scroll ===
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-        }
-    });
-}, observerOptions);
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-document.querySelectorAll('.fade-in').forEach(el => {
-    observer.observe(el);
-});
-
-// Form submission naar Web3Forms met logging
+// === Web3Forms Submission ===
 const form = document.querySelector('form');
 
 if (form) {
-  form.addEventListener('submit', async function (e) {
+  form.addEventListener('submit', async e => {
     e.preventDefault();
 
-    console.log("🚀 Versturen gestart...");
+    const submitBtn = form.querySelector('.submit-btn');
+    const originalBtnText = submitBtn.textContent;
+    submitBtn.textContent = "Sending...";
+    submitBtn.disabled = true;
 
     const data = new FormData(form);
 
@@ -105,19 +83,19 @@ if (form) {
         body: data
       });
 
-      console.log("🔗 Status:", response.status);
-
       if (response.ok) {
         alert("✅ Thank you! Your message has been sent.");
         form.reset();
       } else {
-        const result = await response.json();
-        console.error("❌ Error response:", result);
+        const result = await response.json().catch(() => ({}));
         alert("❌ Something went wrong: " + (result.message || "Unknown error"));
       }
     } catch (error) {
-      console.error("⚠️ Fetch error:", error);
-      alert("⚠️ Network error. Check console for details.");
+      console.error("⚠️ Network error:", error);
+      alert("⚠️ Network error. Please try again later.");
+    } finally {
+      submitBtn.textContent = originalBtnText;
+      submitBtn.disabled = false;
     }
   });
 }
