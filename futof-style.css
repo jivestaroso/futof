@@ -804,7 +804,7 @@ futof version 1.0
         /* Section 3: Services - Asymmetric Grid */
         .services {
             padding: 120px 20px;
-            background: #fafafa;
+            background: #000;
             position: relative;
         }
 
@@ -848,7 +848,7 @@ futof version 1.0
             margin-bottom: 20px;
             position: relative;
             display: inline-block;
-            color: #000;
+            color: #fff;
         }
 
         .services-header h2::before,
@@ -857,7 +857,7 @@ futof version 1.0
             position: absolute;
             width: 20px;
             height: 20px;
-            background: #000;
+            background: #fff;
             top: 50%;
             transform: translateY(-50%);
         }
