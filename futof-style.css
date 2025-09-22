@@ -848,15 +848,16 @@ futof version 1.0
             margin-bottom: 20px;
             position: relative;
             display: inline-block;
+            color: #000;
         }
 
         .services-header h2::before,
         .services-header h2::after {
             content: '';
             position: absolute;
-            width: 30px;
-            height: 1px;
-            background: #fff;
+            width: 20px;
+            height: 20px;
+            background: #000;
             top: 50%;
             transform: translateY(-50%);
         }
