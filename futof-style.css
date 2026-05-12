@@ -158,7 +158,7 @@ nav.scrolled {
 .logo {
   display: flex;
   align-items: center;
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 950;
   letter-spacing: 0.8px;
   color: var(--accent);
@@ -168,16 +168,21 @@ nav.scrolled {
 
 .logoIcon {
   flex: 0 0 auto;
-  width: 30px;
-  height: 30px;
-  margin-right: 11px;
+  width: 46px;
+  height: 46px;
+  margin-right: 13px;
   color: var(--accent);
   filter: drop-shadow(0 1px 0 #000) drop-shadow(0 0 9px rgba(246, 179, 29, 0.75));
 }
 
-#logoText {
+.logoType {
   display: inline-block;
-  min-width: 122px;
+  min-width: 156px;
+  white-space: nowrap;
+}
+
+#logoText {
+  display: inline;
 }
 
 .cursor {
