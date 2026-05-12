@@ -12,8 +12,19 @@
 <!-- Navigation -->
 <nav id="navbar">
   <div class="nav-container">
-    <a href="#home" class="logo">
-      <img src="futoflogo.png" alt="Futof Team">
+    <a href="#home" class="logo" aria-label="Futof Media House home">
+      <svg class="logoIcon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <g fill="currentColor">
+          <path fill-rule="evenodd" d="M477 247a305 305 0 1 0 0 610a305 305 0 1 0 0-610zm0 93a212 212 0 1 1 0 424a212 212 0 1 1 0-424z"/>
+          <polygon points="724,424 862,552 724,680 668,599 606,599 606,495 668,496"/>
+          <rect x="410" y="495" width="264" height="104" rx="52"/>
+          <circle cx="802" cy="204" r="37"/>
+          <circle cx="683" cy="260" r="26"/>
+          <circle cx="786" cy="286" r="25"/>
+        </g>
+      </svg>
+      <span id="logoText"></span>
+      <span class="cursor">▌</span>
     </a>
     <div class="menu-toggle" id="menuToggle">
       <span></span>
@@ -300,6 +311,29 @@ From games and apps to illustration, GUI design and product development, we deli
 <script>
   // Zet automatisch het huidige jaar in de footer
   document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Logo tekst animatie
+  const logoText = document.getElementById("logoText");
+  if (logoText) {
+    const texts = ["Futof", "Made by Jives"];
+    let i = 0;
+    let j = 0;
+
+    function animateLogoText() {
+      const currentText = texts[i];
+      logoText.textContent = currentText.slice(0, j);
+      j++;
+
+      if (j > currentText.length) {
+        i = (i + 1) % texts.length;
+        j = 0;
+      }
+
+      setTimeout(animateLogoText, 220);
+    }
+
+    animateLogoText();
+  }
 </script>
 </body>
 </html>

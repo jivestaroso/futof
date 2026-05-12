@@ -166,11 +166,32 @@ nav.scrolled {
   text-shadow: 0 1px 0 #000, 0 0 10px rgba(244, 160, 0, 0.47);
 }
 
-.logo img {
-  display: block;
-  width: auto;
-  max-height: 44px;
-  filter: drop-shadow(0 1px 0 #000) drop-shadow(0 0 9px rgba(246, 179, 29, 0.55));
+.logoIcon {
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  margin-right: 11px;
+  color: var(--accent);
+  filter: drop-shadow(0 1px 0 #000) drop-shadow(0 0 9px rgba(246, 179, 29, 0.75));
+}
+
+#logoText {
+  display: inline-block;
+  min-width: 122px;
+}
+
+.cursor {
+  display: inline-block;
+  width: 1ch;
+  color: var(--accent);
+  animation: logoBlink 1.05s infinite;
+  text-shadow: 0 0 10px var(--accent);
+}
+
+@keyframes logoBlink {
+  50% {
+    opacity: 0;
+  }
 }
 
 .menu-toggle {
